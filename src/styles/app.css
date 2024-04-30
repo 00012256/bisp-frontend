@@ -115,6 +115,10 @@ p {
   height: 100%;
 }
 
+button[disabled] {
+  cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
   html {
     font-size: 90%;
