@@ -1,11 +1,4 @@
-import {
-  FaHome,
-  FaList,
-  FaUser,
-  FaUserMd,
-  FaUsers,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaHome, FaList, FaUserMd, FaUsers, FaEnvelope } from "react-icons/fa";
 import "../styles/sidebar.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
@@ -41,11 +34,6 @@ const SidePanel = () => {
       name: "Applications",
       path: "/dashboard/applications",
       icon: <FaEnvelope />,
-    },
-    {
-      name: "Profile",
-      path: "/profile",
-      icon: <FaUser />,
     },
   ];
 

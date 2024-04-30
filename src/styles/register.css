@@ -24,7 +24,7 @@
 
 .form-input,
 textarea,
-select {
+action {
   font-size: 1rem;
   background-color: rgb(234, 234, 234);
   color: black;
@@ -36,7 +36,7 @@ select {
 
 .form-input:focus,
 textarea:focus,
-select:focus {
+action:focus {
   outline: none;
 }
 

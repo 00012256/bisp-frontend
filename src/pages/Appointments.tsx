@@ -12,18 +12,19 @@ import User from "../interfaces/User";
 import Appointment from "../interfaces/Appointment";
 import { getData, putData } from "../api/api";
 import { RootState } from "../redux/store";
+import moment from "moment";
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.root.loading);
-  const { userId } = jwtDecode<User>(localStorage.getItem("token") || "");
+  const userInfo = useSelector((state: RootState) => state.root.userInfo);
 
   const getAllAppoint = async () => {
     try {
       dispatch(setLoading(true));
       const temp = await getData<Appointment[]>(
-        `/appointments?search=${userId}`
+        `/appointments?search=${userInfo?._id}`
       );
       console.log(temp);
       setAppointments(temp);
@@ -38,9 +39,9 @@ const Appointments = () => {
   const complete = async (ele: Appointment) => {
     try {
       await toast.promise(putData(`/appointments/${ele._id}/completed`), {
-        success: "Appointment booked successfully",
-        error: "Unable to book appointment",
-        loading: "Booking appointment...",
+        success: "Appointment completed successfully",
+        error: "Unable to complete appointment",
+        loading: "Completing appointment...",
       });
 
       getAllAppoint();
@@ -55,7 +56,7 @@ const Appointments = () => {
       {loading ? (
         <Loading />
       ) : (
-        <section className='container notif-section'>
+        <section className='container appointments-section'>
           <h2 className='page-heading'>Your Appointments</h2>
 
           {appointments.length > 0 ? (
@@ -71,11 +72,7 @@ const Appointments = () => {
                     <th>Booking Date</th>
                     <th>Booking Time</th>
                     <th>Status</th>
-                    {userId === appointments[0].doctorId?._id ? (
-                      <th>Action</th>
-                    ) : (
-                      <></>
-                    )}
+                    {userInfo?.isDoctor && <th>Action</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -91,25 +88,27 @@ const Appointments = () => {
                         <td>
                           {ele?.userId?.firstName + " " + ele?.userId?.lastName}
                         </td>
-                        <td>{String(ele?.date)}</td>
+                        <td>{moment(ele?.date).format("YYYY-MM-DD")}</td>
                         <td>{ele?.time}</td>
                         <td>{ele?.createdAt.split("T")[0]}</td>
                         <td>{ele?.updatedAt.split("T")[1].split(".")[0]}</td>
                         <td>{ele?.status}</td>
-                        {userId === ele?.doctorId?._id ? (
+                        {userInfo?.isDoctor && (
                           <td>
-                            <button
-                              className={`btn user-btn accept-btn ${
-                                ele?.status === "completed" ? "disable-btn" : ""
-                              }`}
-                              disabled={ele?.status === "completed"}
-                              onClick={() => complete(ele)}
-                            >
-                              Complete
-                            </button>
+                            {userInfo?._id === ele?.doctorId?._id && (
+                              <button
+                                className={`btn user-btn accept-btn ${
+                                  ele?.status === "completed"
+                                    ? "disable-btn"
+                                    : ""
+                                }`}
+                                disabled={ele?.status === "completed"}
+                                onClick={() => complete(ele)}
+                              >
+                                Complete
+                              </button>
+                            )}
                           </td>
-                        ) : (
-                          <></>
                         )}
                       </tr>
                     );

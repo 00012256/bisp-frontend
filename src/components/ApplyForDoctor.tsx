@@ -68,7 +68,7 @@ const ApplyForDoctor = (id: string) => {
             type='text'
             name='fee'
             className='form-input'
-            placeholder='Enter your fee per consultation in rupees'
+            placeholder='Enter your fee per consultation in dollars'
             value={formDetails.fee}
             onChange={onInputChange}
           />

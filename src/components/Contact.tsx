@@ -24,6 +24,10 @@ const Contact = () => {
     });
   };
 
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <section className='register-section flex-center' id='contact'>
       <div className='contact-container flex-center contact'>
@@ -55,7 +59,9 @@ const Contact = () => {
             cols={12}
           ></textarea>
 
-          <button className='btn form-btn'>send</button>
+          <button className='btn form-btn' onClick={onClick}>
+            send
+          </button>
         </form>
       </div>
     </section>

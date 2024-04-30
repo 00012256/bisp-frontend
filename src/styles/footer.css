@@ -1,7 +1,7 @@
 @import url(app.css);
 
 footer {
-  background-color: var(--dark-gray);
+  background-color: var(--black);
 }
 
 .footer {
@@ -22,6 +22,10 @@ footer {
 
 .footer a {
   color: var(--light-blue);
+}
+
+.footer-links h3 {
+  text-align: left;
 }
 
 .footer-links ul {

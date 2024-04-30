@@ -30,7 +30,6 @@ const BookAppointment = ({
   const userInfo = useSelector(
     (state: RootState) => state.root.userInfo
   ) as User;
-  console.log(userInfo);
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,23 +42,29 @@ const BookAppointment = ({
   const book = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      await toast.promise(
-        postData("/appointments/book", {
-          doctorId: doctor?._id,
-          userId: userInfo?._id,
-          date: formDetails.date,
-          time: formDetails.time,
-          doctorName: doctor?.id?.firstName,
-          doctorSurname: doctor?.id?.lastName,
-          userName: userInfo.firstName,
-          userSurname: userInfo.lastName,
-        }),
-        {
-          success: "Appointment booked successfully",
-          error: "Unable to book appointment",
-          loading: "Booking appointment...",
-        }
-      );
+      if (doctor?.id?._id === userInfo?._id) {
+        toast.error("You cannot book an appointment with yourself");
+      } else if (formDetails.date === "" || formDetails.time === "") {
+        return toast.error("Input field should not be empty");
+      } else {
+        await toast.promise(
+          postData("/appointments/book", {
+            doctorId: doctor?.id,
+            userId: userInfo?._id,
+            date: formDetails.date,
+            time: formDetails.time,
+            doctorName: doctor?.id?.firstName,
+            doctorSurname: doctor?.id?.lastName,
+            userName: userInfo.firstName,
+            userSurname: userInfo.lastName,
+          }),
+          {
+            success: "Appointment booked successfully",
+            error: "Unable to book appointment",
+            loading: "Booking appointment...",
+          }
+        );
+      }
       setModalOpen(false);
     } catch (error) {
       return error;

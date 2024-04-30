@@ -14,7 +14,7 @@ const AdminApplications = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.root.loading);
 
-  const getAllApp = async () => {
+  const getAllApplications = async () => {
     try {
       dispatch(setLoading(true));
       const temp: Doctor[] = await getData(`/doctors/pending-doctors`);
@@ -23,32 +23,32 @@ const AdminApplications = () => {
     } catch (error) {}
   };
 
-  const acceptUser = async (id: any) => {
+  const acceptDoctorApplication = async (id: any) => {
     try {
       const confirm = window.confirm("Are you sure you want to accept?");
       if (confirm) {
         await toast.promise(putData(`/doctors/accept/${id}`), {
           success: "Application accepted",
-          error: "Unable to accept application",
+          error: "Error accepting application",
           loading: "Accepting application...",
         });
-        getAllApp();
+        getAllApplications();
       }
     } catch (error) {
       return error;
     }
   };
 
-  const deleteUser = async (id: any) => {
+  const rejectDoctorApplication = async (id: any) => {
     try {
-      const confirm = window.confirm("Are you sure you want to delete?");
+      const confirm = window.confirm("Are you sure you want to reject?");
       if (confirm) {
         await toast.promise(putData(`/doctors/reject/${id}`), {
           success: "Application rejected",
-          error: "Unable to reject application",
+          error: "Error rejecting application",
           loading: "Rejecting application...",
         });
-        getAllApp();
+        getAllApplications();
       }
     } catch (error) {
       return error;
@@ -56,7 +56,7 @@ const AdminApplications = () => {
   };
 
   useEffect(() => {
-    getAllApp();
+    getAllApplications();
   }, []);
 
   return (
@@ -79,7 +79,7 @@ const AdminApplications = () => {
                     <th>Mobile No.</th>
                     <th>Experience</th>
                     <th>Specialization</th>
-                    <th>Fees</th>
+                    <th>Fee</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -105,19 +105,19 @@ const AdminApplications = () => {
                         <td>{ele?.experience}</td>
                         <td>{ele?.specialty}</td>
                         <td>{ele?.fee}</td>
-                        <td className='select'>
+                        <td className='action'>
                           <button
                             className='btn user-btn accept-btn'
                             onClick={() => {
-                              acceptUser(ele?.id?._id);
+                              acceptDoctorApplication(ele?.id?._id);
                             }}
                           >
                             Accept
                           </button>
                           <button
-                            className='btn user-btn'
+                            className='btn user-btn reject-btn'
                             onClick={() => {
-                              deleteUser(ele?.id?._id);
+                              rejectDoctorApplication(ele?.id?._id);
                             }}
                           >
                             Reject

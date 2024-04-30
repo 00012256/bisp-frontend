@@ -85,7 +85,7 @@ const Users = () => {
                         <td>{ele?.age}</td>
                         <td>{ele?.gender}</td>
                         <td>{ele?.isDoctor ? "Yes" : "No"}</td>
-                        <td className='select'>
+                        <td className='action'>
                           <button
                             className='btn user-btn'
                             onClick={() => {

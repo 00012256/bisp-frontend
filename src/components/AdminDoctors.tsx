@@ -63,7 +63,7 @@ const AdminDoctors = () => {
                     <th>Mobile No.</th>
                     <th>Experience</th>
                     <th>Specialization</th>
-                    <th>Fees</th>
+                    <th>Fee</th>
                     <th>Remove</th>
                   </tr>
                 </thead>
@@ -86,7 +86,7 @@ const AdminDoctors = () => {
                         <td>{doctor?.experience}</td>
                         <td>{doctor?.specialty}</td>
                         <td>{doctor?.fee}</td>
-                        <td className='select'>
+                        <td className='action'>
                           <button
                             className='btn user-btn'
                             onClick={() => {

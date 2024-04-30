@@ -16,7 +16,7 @@ const Doctors = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.root.loading);
 
-  const fetchAllDocs = async () => {
+  const fetchAllDoctors = async () => {
     dispatch(setLoading(true));
     const data = await getData<Doctor[]>(`/doctors`);
     setDoctors(data);
@@ -24,7 +24,7 @@ const Doctors = () => {
   };
 
   useEffect(() => {
-    fetchAllDocs();
+    fetchAllDoctors();
   }, []);
 
   return (

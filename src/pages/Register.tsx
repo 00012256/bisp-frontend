@@ -47,7 +47,7 @@ const Register = () => {
       }
     } else {
       setLoading(false);
-      toast.error("Please select an image in jpeg or png format");
+      toast.error("Please action an image in jpeg or png format");
     }
   };
 
@@ -62,17 +62,6 @@ const Register = () => {
         "profile-pic"
       ) as HTMLInputElement;
 
-      if (fileInput) {
-        const selectedFile = fileInput.files?.[0];
-        if (selectedFile) {
-          await onUpload(selectedFile);
-        }
-      }
-
-      if (file === "") {
-        return toast.error("Please select an image");
-      }
-
       const { firstName, lastName, email, password, confpassword } =
         formDetails;
       if (!firstName || !lastName || !email || !password || !confpassword) {
@@ -85,6 +74,13 @@ const Register = () => {
         return toast.error("Password must be at least 5 characters long");
       } else if (password !== confpassword) {
         return toast.error("Passwords do not match");
+      }
+
+      if (fileInput) {
+        const actionedFile = fileInput.files?.[0];
+        if (actionedFile) {
+          await onUpload(actionedFile);
+        }
       }
 
       await toast.promise(
@@ -101,6 +97,7 @@ const Register = () => {
           loading: "Registering user...",
         }
       );
+
       return navigate("/login");
     } catch (error) {
       return toast.error("An error happened while registering user");

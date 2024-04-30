@@ -5,10 +5,7 @@ const Hero = () => {
   return (
     <section className='hero'>
       <div className='hero-content'>
-        <h1>
-          Empowering Health, One Appointment at a Time: <br />
-          Book Smarter, Live Healthier!
-        </h1>
+        <h1>Book Smarter, Live Healthier!</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
           porro saepe voluptate commodi reprehenderit vitae ut voluptatum ea

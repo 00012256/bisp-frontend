@@ -34,8 +34,8 @@ const DoctorCard: React.FC<IProps> = ({ doctor }) => {
         <strong>Experience: </strong>
         {doctor?.experience}yrs
       </p>
-      <p className='fees'>
-        <strong>Fees per consultation: </strong>$ {doctor?.fee}
+      <p className='fee'>
+        <strong>Fee per consultation: </strong>$ {doctor?.fee}
       </p>
       <p className='phone'>
         <strong>Phone: </strong>

@@ -14,6 +14,7 @@
   justify-content: center;
   width: 100%;
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .home-sub-heading {
@@ -27,7 +28,7 @@ h3 {
 }
 
 table {
-  width: 100%;
+  max-width: 95vw;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
@@ -67,35 +68,36 @@ td {
   border: 1px solid rgb(165, 165, 165);
 }
 
-.select {
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-end;
-  justify-content: center;
-}
-
 .user-btn {
-  background-color: var(--dark-blue);
-  color: black;
   font-size: 0.8rem;
   padding: 0.5rem 0.8rem;
 }
 
-.user-btn:hover {
-  background-color: var(--darker-blue);
+.reject-btn {
+  margin-left: 0.3rem;
 }
 
 .accept-btn {
-  background-color: var(--light-blue);
+  color: var(--white);
+  background-color: var(--primary-color);
   font-size: 0.8rem;
   padding: 0.5rem 0.8rem;
 }
 
-.accept-btn:hover {
-  background-color: var(--darker-blue);
+.accept-btn.disable-btn {
+  opacity: 0.5;
 }
 
 .appointments {
+  color: #000;
+}
+
+.appointments-section {
+  min-height: 60vh;
+  justify-content: flex-start;
+}
+
+.notifications {
   color: #000;
 }
 

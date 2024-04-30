@@ -6,8 +6,12 @@
   gap: 1rem;
   border-radius: 10px;
   padding: 1.5rem 2rem;
-  box-shadow: 0 0 10px 0 var(--quaternary-color);
-  background-color: var(--dark-gray);
+  box-shadow: 0 0 10px 0 rgba(144, 174, 205, 0.5);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 119, 255, 1) 0%,
+    rgba(64, 164, 255, 1) 100%
+  );
 }
 
 .card-img {

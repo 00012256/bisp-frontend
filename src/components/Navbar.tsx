@@ -2,21 +2,18 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import { HashLink } from "react-router-hash-link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../redux/reducers/rootSlice";
 import { FiMenu } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
-import { jwtDecode } from "jwt-decode";
-import User from "../interfaces/User";
+import { RootState } from "../redux/store";
 
 const Navbar = () => {
   const [iconActive, setIconActive] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token") || "";
-  const user = localStorage.getItem("token")
-    ? jwtDecode<User>(localStorage.getItem("token") || "")
-    : null;
+  const user = useSelector((state: RootState) => state.root.userInfo);
 
   const logoutFunc = () => {
     dispatch(setUserInfo(null));
@@ -37,6 +34,11 @@ const Navbar = () => {
           <li>
             <NavLink to={"/doctors"}>Doctors</NavLink>
           </li>
+          {token && user && (
+            <li>
+              <NavLink to={"/profile"}>Profile</NavLink>
+            </li>
+          )}
           {token && user && user.isAdmin && (
             <li>
               <NavLink to={"/dashboard/users"}>Dashboard</NavLink>
@@ -55,9 +57,6 @@ const Navbar = () => {
               </li>
               <li>
                 <HashLink to={"/#contact"}>Contact Us</HashLink>
-              </li>
-              <li>
-                <NavLink to={"/profile"}>Profile</NavLink>
               </li>
             </>
           )}

@@ -15,18 +15,21 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.root.loading);
+  const userInfo = useSelector((state: RootState) => state.root.userInfo);
 
-  const getAllNotif = async () => {
+  const getAllNotifications = async () => {
     try {
       dispatch(setLoading(true));
-      const temp = await getData<Notification[]>(`/notifications`);
+      const temp = await getData<Notification[]>(
+        `/notifications/${userInfo?._id}`
+      );
       dispatch(setLoading(false));
       setNotifications(temp);
     } catch (error) {}
   };
 
   useEffect(() => {
-    getAllNotif();
+    userInfo && getAllNotifications();
   }, []);
 
   return (
@@ -55,8 +58,8 @@ const Notifications = () => {
                       <tr key={ele?._id}>
                         <td>{i + 1}</td>
                         <td>{ele?.content}</td>
-                        <td>{ele?.updatedAt.split("T")[0]}</td>
-                        <td>{ele?.updatedAt.split("T")[1].split(".")[0]}</td>
+                        <td>{ele?.updatedAt?.split("T")[0]}</td>
+                        <td>{ele?.updatedAt?.split("T")[1].split(".")[0]}</td>
                       </tr>
                     );
                   })}

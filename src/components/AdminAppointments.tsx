@@ -30,13 +30,11 @@ const AdminAppointments = () => {
   const complete = async (appointment: Appointment) => {
     try {
       await toast.promise(
-        putData("/appointment/completed", {
-          appointmentId: appointment?._id,
-        }),
+        putData(`/appointments/${appointment._id}/completed`),
         {
-          success: "Appointment booked successfully",
-          error: "Unable to book appointment",
-          loading: "Booking appointment...",
+          success: "Appointment completed successfully",
+          error: "Unable to complete appointment",
+          loading: "Completing appointment...",
         }
       );
 
@@ -52,7 +50,7 @@ const AdminAppointments = () => {
         <Loading />
       ) : (
         <section className='user-section'>
-          <h3 className='home-sub-heading'>All Users</h3>
+          <h3 className='home-sub-heading'>All Appointments</h3>
           {appointments.length > 0 ? (
             <div className='user-container'>
               <table>

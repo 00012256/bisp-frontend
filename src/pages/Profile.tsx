@@ -8,6 +8,8 @@ import { jwtDecode } from "jwt-decode";
 import User from "../interfaces/User";
 import { getData, putData } from "../api/api";
 import { RootState } from "../redux/store";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 interface FormDetails {
   firstName: string;
@@ -22,9 +24,9 @@ interface FormDetails {
 }
 
 const Profile: React.FC = () => {
-  const { userId } = jwtDecode<User>(localStorage.getItem("token") || "");
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.root.loading);
+  const user = useSelector((state: RootState) => state.root.userInfo);
   const [file, setFile] = useState("");
   const [formDetails, setFormDetails] = useState<FormDetails>({
     firstName: "",
@@ -39,7 +41,7 @@ const Profile: React.FC = () => {
   const getUser = async () => {
     try {
       dispatch(setLoading(true));
-      const temp = await getData<User>(`/users/${userId}`);
+      const temp = await getData<User>(`/users/${user?._id}`);
       setFormDetails({
         ...temp,
         mobile: temp.mobile ? temp.mobile : "",
@@ -110,7 +112,7 @@ const Profile: React.FC = () => {
       }
 
       await toast.promise(
-        putData(`/users/${userId}/update-profile`, profileData),
+        putData(`/users/${user?._id}/update-profile`, profileData),
         {
           success: "Profile updated successfully",
           error: "Unable to update profile",
@@ -126,10 +128,11 @@ const Profile: React.FC = () => {
 
   return (
     <>
+      <Navbar />
       {loading ? (
         <Loading />
       ) : (
-        <section className='register-section flex-center'>
+        <section className='container notifications-section'>
           <div className='profile-container flex-center'>
             <h2 className='form-heading'>Profile</h2>
             <img src={file} alt='profile' className='profile-pic' />
@@ -224,6 +227,7 @@ const Profile: React.FC = () => {
           </div>
         </section>
       )}
+      <Footer />
     </>
   );
 };
